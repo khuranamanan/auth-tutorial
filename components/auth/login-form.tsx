@@ -26,6 +26,8 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 function LoginForm() {
   const searchParams = useSearchParams();
 
+  const callbackUrl = searchParams.get("callbackUrl");
+
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked"
       ? "Email already in use with other provider!"
@@ -47,7 +49,7 @@ function LoginForm() {
   function onSubmit(data: z.infer<typeof LoginSchema>) {
     console.log("data", data);
     startTransition(() => {
-      login(data)
+      login(data, callbackUrl)
         .then((response) => {
           if (response?.error) {
             form.reset();

@@ -27,13 +27,20 @@ export default auth((req) => {
   }
 
   if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL(authRoutes[0], nextUrl));
+    let callbackUrl = nextUrl.pathname;
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+
+    const encodedCallbackURL = encodeURIComponent(callbackUrl);
+    return Response.redirect(
+      new URL(`/auth/login?callbackUrl=${encodedCallbackURL}`, nextUrl)
+    );
   }
 
   return;
 });
 
-// Optionally, don't invoke Middleware on some paths
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };

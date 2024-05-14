@@ -15,7 +15,7 @@ export default function Home() {
           Auth.js.
         </p>
         <div>
-          <LoginButton>
+          <LoginButton mode="modal" asChild>
             <Button variant="default" size="lg">
               Sign in
             </Button>

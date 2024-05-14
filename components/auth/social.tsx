@@ -6,10 +6,15 @@ import { FaGithub } from "react-icons/fa";
 
 import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { useSearchParams } from "next/navigation";
 
 function Social() {
+  const searchParams = useSearchParams();
+
+  const callbackUrl = searchParams.get("callbackUrl");
+
   async function login(type: "google" | "github") {
-    await signIn(type, { callbackUrl: DEFAULT_LOGIN_REDIRECT });
+    await signIn(type, { callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT });
   }
 
   return (
