@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { auth } from "@/auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/sonner";
+import { ModeToggle } from "@/components/mode-toggle";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -38,6 +39,10 @@ export default async function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Toaster />
             {children}
+
+            <div className="absolute top-4 right-4">
+              <ModeToggle />
+            </div>
             <TailwindIndicator />
           </ThemeProvider>
         </body>

@@ -25,7 +25,7 @@ function LoginButton({
     return (
       <Dialog>
         <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
-        <DialogContent className="p-0 w-auto bg-transparent border-none">
+        <DialogContent className="p-0 w-full bg-transparent border-none max-w-[600px]">
           <LoginForm />
         </DialogContent>
       </Dialog>
