@@ -1,6 +1,7 @@
 "use server";
 
 import { signIn } from "@/auth";
+import bcrypt from "bcryptjs";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 import { getTwoFactorTokenByEmail } from "@/data/two-factor-token";
 import { getUserByEmail } from "@/data/user";
@@ -31,6 +32,14 @@ export async function login(
 
   if (!existingUser || !existingUser.password || !existingUser.email) {
     return { error: "User not found!" };
+  }
+
+  if (password && existingUser.password) {
+    const passwordMatch = await bcrypt.compare(password, existingUser.password);
+
+    if (!passwordMatch) {
+      return { error: "Invalid credentials!" };
+    }
   }
 
   if (!existingUser.emailVerified) {
